@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg bg-teal px-3 py-2 shadow-sm sticky-top sticky-header">
+  <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap" style="width: 1920px; height: 100px;">
+    <a class="navbar-brand text-white fw-bold fs-3" href="#">Destek</a>
+    <div class="d-flex align-items-center gap-3 text-white">
+      <div class="text-end me-2">
+        <div class="fw-semibold text-uppercase">Shraddha Sonavane</div>
+        <div class="small text-white-50">Intern</div>
+      </div>
+      <div class="user-icon">
+        <img src="3.png" alt="user">
+      </div>
+      <div class="bell-icon">
+        <img src="4.png" alt="bell">
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="sticky-sidebar px-0">
+  <ul class="nav flex-column m-0">
+    <li class="nav-item">
+      <a routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="tachometer-alt-solid 1.svg" alt="image" class="sidebar-icon" height="25">
+        Dashboard
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/one" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="fingerprint_565512 1.svg" alt="image" class="sidebar-icon" height="25">
+        Mark Attendance
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/festivalleave" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="gift-solid 1.svg" alt="image" class="sidebar-icon" height="25">
+        Festival Leave
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/leavemanagement" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="plane-departure-solid 1.svg" alt="image" class="sidebar-icon" height="25">
+        Leave Management
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/rnr" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="award-solid 1.svg" alt="image" class="sidebar-icon" height="25">
+        Rewards & Recognition
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/timesheet" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="clock-solid 1.svg" alt="image" class="sidebar-icon" height="25">
+        Today’s Timesheet
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/workhistory" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="briefcase-solid 1.svg" alt="image" class="sidebar-icon" height="25">
+        Work History
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/timesheethistory" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-black fw-medium py-3 d-flex align-items-center">
+        <img src="calendar-days-solid 1.svg" alt="image" class="sidebar-icon" height="25">
+        Timesheet History
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<div class="main-content" style="background-color: #ECF0F5;">
+  <router-outlet></router-outlet>
+</div>
+
+<footer class="bg-teal text-white text-start py-2 sticky-footer pe-3">
+  <small>
+    Copyright © 2025 
+    <a href="#" class="text-white text-decoration-underline fw-bold">Destek Infosolutions Pvt Ltd.</a> 
+    All rights reserved.
+  </small>
+</footer>

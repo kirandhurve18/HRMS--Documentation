@@ -1,0 +1,353 @@
+<div class="container-fluid">
+  <div
+    class="d-flex rounded bg-white p-3 box-shadow mb-3 justify-content-between"
+  >
+    <h5 class="fw-bold mb-0">
+      {{ getHeadingFromActiveTab() }} {{ activeTab === 'summary' ? summaryYear :
+      '' }}
+    </h5>
+    <div class="d-flex gap-3" *ngIf="activeTab === 'summary'">
+      <button class="btn" (click)="decreaseSummaryYear()">
+        <i class="fa-solid fa-angles-left"></i> Previous Year
+      </button>
+      <button class="btn" (click)="increaseSummaryYear()">
+        Next Year <i class="fa-solid fa-angles-right"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row g-3 mb-3">
+    <div class="col-sm-3">
+      <button
+        class="btn w-100"
+        [ngClass]="{'btn-teal': activeTab === 'active', 'btn-white': activeTab !== 'active'}"
+        (click)="activeTab = 'active'"
+      >
+        Active Leaves
+      </button>
+    </div>
+    <div class="col-sm-3">
+      <button
+        class="btn w-100"
+        [ngClass]="{'btn-teal': activeTab === 'past', 'btn-white': activeTab !== 'past'}"
+        (click)="activeTab = 'past'"
+      >
+        Past Leaves
+      </button>
+    </div>
+    <div class="col-sm-3">
+      <button
+        class="btn w-100"
+        [ngClass]="{'btn-teal': activeTab === 'summary', 'btn-white': activeTab !== 'summary'}"
+        (click)="activeTab = 'summary'"
+      >
+        Leaves Summary
+      </button>
+    </div>
+  </div>
+  <div class="d-flex flex-column rounded bg-white p-3 box-shadow">
+    <ng-container *ngIf="activeTab === 'active'">
+      <div class="row w-100 align-items-center mb-3">
+        <div class="col-12 col-md-6">
+          <h5 class="fw-bold mb-3 mb-md-0">Employee's Currently On Leave</h5>
+        </div>
+        <div class="col-12 col-md-6">
+          <div
+            class="d-flex flex-column flex-md-row justify-content-md-end gap-3"
+          >
+            <div
+              class="flex-fill flex-md-grow-0 position-relative"
+              style="min-width: 200px"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search Employee"
+                [(ngModel)]="searchEmployee"
+                (ngModelChange)="searchEmployeeChange()"
+              />
+              <i
+                class="fa-solid fa-magnifying-glass position-absolute top-50 translate-middle-y"
+                style="right: 10px; color: #00000080; font-size: 18px"
+              ></i>
+            </div>
+            <div class="flex-fill flex-md-grow-0">
+              <button class="btn btn-success w-100 w-md-auto">
+                Download Report
+                <i
+                  class="fa-solid fa-file-download ms-2"
+                  style="font-size: 18px"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="table-header">
+            <tr>
+              <th>S.No</th>
+              <th>Employee Name</th>
+              <th>Department</th>
+              <th>Apply Date</th>
+              <th>El</th>
+              <th>Leave Type</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Paid</th>
+              <th>Unpaid</th>
+              <th>No. of Days</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of activeLeavesData">
+              <td>{{ item.sno }}</td>
+              <td>{{ item.employeeName }}</td>
+              <td>{{ item.department }}</td>
+              <td>{{ item.applyDate }}</td>
+              <td>{{ item.el }}</td>
+              <td>{{ item.leaveType }}</td>
+              <td>{{ item.startDate }}</td>
+              <td>{{ item.endDate }}</td>
+              <td>{{ item.paid }}</td>
+              <td>{{ item.unpaid }}</td>
+              <td>{{ item.noOfDays }}</td>
+              <td>{{ item.reason }}</td>
+              <td>
+                <button
+                  class="status-button"
+                  [ngStyle]="{ backgroundColor: getStatusBgColor(item.status), color: item.status === 'Pending' ? '#000' : '#fff' }"
+                >
+                  {{ item.status }}
+                </button>
+              </td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <i
+                    class="bi bi-eye"
+                    style="color: #009688; cursor: pointer; font-size: 18px"
+                  ></i>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="activeTab === 'past'">
+      <div class="row w-100 align-items-center mb-3">
+        <div class="col-12 col-md-6">
+          <h5 class="fw-bold mb-3 mb-md-0">Old Leaves</h5>
+        </div>
+        <div class="col-12 col-md-6">
+          <div
+            class="d-flex flex-column flex-md-row justify-content-md-end gap-3"
+          >
+            <div
+              class="flex-fill flex-md-grow-0 position-relative"
+              style="min-width: 200px"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search Employee"
+                [(ngModel)]="searchEmployee"
+                (ngModelChange)="searchEmployeeChange()"
+              />
+              <i
+                class="fa-solid fa-magnifying-glass position-absolute top-50 translate-middle-y"
+                style="right: 10px; color: #00000080; font-size: 18px"
+              ></i>
+            </div>
+            <div class="flex-fill flex-md-grow-0">
+              <button class="btn btn-success w-100 w-md-auto">
+                Download Report
+                <i
+                  class="fa-solid fa-file-download ms-2"
+                  style="font-size: 18px"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="table-header">
+            <tr>
+              <th>S.No</th>
+              <th>Employee Name</th>
+              <th>Department</th>
+              <th>Apply Date</th>
+              <th>El</th>
+              <th>Leave Type</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Paid</th>
+              <th>Unpaid</th>
+              <th>No. of Days</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of activeLeavesData">
+              <td>{{ item.sno }}</td>
+              <td>{{ item.employeeName }}</td>
+              <td>{{ item.department }}</td>
+              <td>{{ item.applyDate }}</td>
+              <td>{{ item.el }}</td>
+              <td>{{ item.leaveType }}</td>
+              <td>{{ item.startDate }}</td>
+              <td>{{ item.endDate }}</td>
+              <td>{{ item.paid }}</td>
+              <td>{{ item.unpaid }}</td>
+              <td>{{ item.noOfDays }}</td>
+              <td>{{ item.reason }}</td>
+              <td>
+                <button
+                  class="status-button"
+                  [ngStyle]="{ backgroundColor: getStatusBgColor(item.status), color: item.status === 'Pending' ? '#000' : '#fff' }"
+                >
+                  {{ item.status }}
+                </button>
+              </td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <i
+                    class="bi bi-eye"
+                    style="color: #009688; cursor: pointer; font-size: 18px"
+                  ></i>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="activeTab === 'summary'">
+      <div class="row w-100 align-items-center mb-3">
+        <div class="col-12 col-md-6">
+          <h5 class="fw-bold mb-3 mb-md-0">Employee Wise Leaves Taken</h5>
+        </div>
+        <div class="col-12 col-md-6">
+          <div
+            class="d-flex flex-column flex-md-row justify-content-md-end gap-3"
+          >
+            <div
+              class="flex-fill flex-md-grow-0 position-relative"
+              style="min-width: 200px"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search Employee"
+                [(ngModel)]="searchEmployee"
+                (ngModelChange)="searchEmployeeChange()"
+              />
+              <i
+                class="fa-solid fa-magnifying-glass position-absolute top-50 translate-middle-y"
+                style="right: 10px; color: #00000080; font-size: 18px"
+              ></i>
+            </div>
+            <div class="flex-fill flex-md-grow-0">
+              <button class="btn btn-success w-100 w-md-auto">
+                Download Report
+                <i
+                  class="fa-solid fa-file-download ms-2"
+                  style="font-size: 18px"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="table-header">
+            <tr>
+              <th>
+                ID
+                <img
+                  src="/sort-icon.png"
+                  alt=""
+                  width="20px"
+                  height="20px"
+                  style="cursor: pointer"
+                />
+              </th>
+              <th>
+                Employee Name
+                <img
+                  src="/sort-icon.png"
+                  alt=""
+                  width="20px"
+                  height="20px"
+                  style="cursor: pointer"
+                />
+              </th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>
+                Casual Leaves
+                <img
+                  src="/sort-icon.png"
+                  alt=""
+                  width="20px"
+                  height="20px"
+                  style="cursor: pointer"
+                />
+              </th>
+              <th>
+                Paid Leaves
+                <img
+                  src="/sort-icon.png"
+                  alt=""
+                  width="20px"
+                  height="20px"
+                  style="cursor: pointer"
+                />
+              </th>
+              <th>
+                Sick Leaves
+                <img
+                  src="/sort-icon.png"
+                  alt=""
+                  width="20px"
+                  height="20px"
+                  style="cursor: pointer"
+                />
+              </th>
+              <th>
+                Total Leaves
+                <img
+                  src="/sort-icon.png"
+                  alt=""
+                  width="20px"
+                  height="20px"
+                  style="cursor: pointer"
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of leavesSummaryData">
+              <td>{{ item.employeeId }}</td>
+              <td>{{ item.employeeName }}</td>
+              <td>{{ item.department }}</td>
+              <td>{{ item.designation }}</td>
+              <td>{{ item.casualLeaves }}</td>
+              <td>{{ item.paidLeaves }}</td>
+              <td>{{ item.sickLeaves }}</td>
+              <td>{{ item.totalLeaves }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+</div>

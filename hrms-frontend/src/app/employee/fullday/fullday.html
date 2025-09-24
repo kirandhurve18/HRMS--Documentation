@@ -1,0 +1,160 @@
+<div class="container-fluid px-3">
+  <div class="row">
+    <div class="col-12 mt-3">
+      <div class="bg-white rounded shadow-sm p-3">
+        <h5 class="fw-bold mb-0">Leave Management</h5>
+      </div>
+    </div>
+
+    <div class="container my-4">
+      <div class="row">
+        <div class="col-12 col-lg-9 mb-4">
+          <div class="card shadow custom-card p-4">
+            <div class="d-flex align-items-center mb-3 flex-wrap">
+              <h5 
+                class="fw-bold mb-0 me-4 cursor-pointer"
+                [ngStyle]="{ color: selectedTab === 'status' ? '#009688' : '#000' }"
+                (click)="selectTab('status')">
+                Leave Status
+              </h5>
+
+              <h5 
+                class="fw-bold mb-0 cursor-pointer"
+                [ngStyle]="{ color: selectedTab === 'apply' ? '#009688' : '#000' }"
+                (click)="selectTab('apply')">
+                Apply Leave
+              </h5>
+            </div>
+
+            <hr>
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+              <h5 class="fw-bold mb-0">Leave Application</h5>
+              <div class="text-md-end text-start mt-2 mt-md-0">
+                <strong>Manager :-</strong> Abhisek Jaiswal &nbsp;&nbsp;
+                <strong>Reviewer :-</strong> Anirudha Kotgire & Mandar Lande
+              </div>
+            </div>
+
+            <div class="mb-3 d-flex align-items-center gap-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="leaveDay" id="fullDay"
+                  [value]="'fullDay'" [(ngModel)]="leaveType" (change)="onLeaveTypeChange()" checked />
+                <label class="form-check-label" for="fullDay">Full Day</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="leaveDay" id="halfDay"
+                  [value]="'halfDay'" [(ngModel)]="leaveType" (change)="onLeaveTypeChange()" />
+                <label class="form-check-label" for="halfDay">Half Day</label>
+              </div>
+            </div>
+
+            
+            <div class="row mb-3 align-items-center">
+              <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
+              <div class="col-sm-4">
+                <input type="date" class="form-control" [(ngModel)]="startDate" name="startDate" />
+              </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+              <label for="endDate" class="col-sm-2 col-form-label">End Date</label>
+              <div class="col-sm-4">
+                <input type="date" class="form-control" [(ngModel)]="endDate" name="endDate" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label for="leaveType" class="col-sm-2 col-form-label">Leave Type</label>
+              <div class="col-sm-3">
+                <select class="form-select" [(ngModel)]="selectedLeaveType" name="leaveType">
+                  <option selected disabled>Select Leave Type</option>
+                  <option>Paid Leave</option>
+                  <option>Sick Leave</option>
+                  <option>Unpaid Leave</option>
+                  <option>Comp Off</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label for="noOfDays" class="col-sm-2 col-form-label">No. of Days</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control text-muted" placeholder="Auto Calculated" readonly
+                       [value]="calculateDays()" style="background-color: #e5f4f3;" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="reason" class="form-label">Reason</label>
+              <div class="col-sm-3">
+                <textarea class="form-control" [(ngModel)]="reason" rows="3" placeholder="Enter your Reason" name="reason"></textarea>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-secondary">Cancel</button>
+              <button type="button" class="btn btn-success" (click)="submitLeave()">Submit</button>
+            </div>
+          </div>
+        </div>
+
+ 
+<div class="col-12 col-lg-3 mb-4">
+  <div class="card shadow-sm h-100 rounded-4 overflow-hidden">
+    <div class="card-body p-3">
+      <h5 class="fw-bold text-center">
+        Available Leaves for the Year
+      </h5>
+
+      <table class="table mb-0" style="table-layout: fixed; width: 100%; font-size: 14px;">
+        <!-- ✅ Column Widths -->
+        <colgroup>
+          <col style="width: 40%;">
+          <col style="width: 18%;">
+          <col style="width: 17%;">
+          <col style="width: 25%;">
+        </colgroup>
+
+        <thead>
+          <tr style="background-color: #009688; color: white; white-space: nowrap; font-weight: 600;">
+            <th style="background-color: #009688; color: white; white-space: nowrap; font-weight: 600;" class="text-center">Leave Type</th>
+            <th  style="background-color: #009688; color: white; white-space: nowrap; font-weight: 600;" class="text-center">Taken</th>
+            <th  style="background-color: #009688; color: white; white-space: nowrap; font-weight: 600; font-size: 11px;" class="text-center">Available</th> <!-- 👈 Smaller text -->
+            <th style="background-color: #009688; color: white; white-space: nowrap; font-weight: 600;" class="text-center">Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let employee of employeeleave; let i = index">
+            <td class="text-center"
+                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                [ngStyle]="{ 'background-color': i % 2 ===1 ? '#ffffff' : '#E5F4F3' }">
+              {{ employee.leaveType === 'Comp Off' ? 'Comp Off ' : employee.leaveType }}
+            </td>
+            <td class="text-center"
+                style="white-space: nowrap;"
+                [ngStyle]="{ 'background-color': i % 2 === 1 ? '#ffffff' : '#E5F4F3' }">
+              {{ employee.Taken }}
+            </td>
+            <td class="text-center"
+                style="white-space: nowrap;"
+                [ngStyle]="{ 'background-color': i % 2 === 1 ? '#ffffff' : '#E5F4F3' }">
+              {{ employee.Available }}
+            </td>
+            <td class="text-center fw-bold"
+                style="white-space: nowrap;"
+                [ngStyle]="{ 'background-color': i % 2 === 1 ? '#ffffff' : '#E5F4F3' }">
+              {{ employee.Total }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+</div>

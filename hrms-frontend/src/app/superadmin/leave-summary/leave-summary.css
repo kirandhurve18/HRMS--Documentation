@@ -1,0 +1,80 @@
+.btn-teal {
+  background-color: #009688;
+  border-color: #009688;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-white {
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+}
+
+.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-teal:hover {
+  background-color: #00796b;
+  border-color: #00796b;
+  transform: translateY(-1px);
+}
+
+.btn-white:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+tbody tr:nth-child(even) td {
+  background-color: #e5f4f3;
+}
+.table-header th {
+  font-weight: 400;
+  background-color: #009688 !important;
+  color: white !important;
+  border-color: #009688 !important;
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+tbody td {
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 400;
+  color: #000000;
+}
+
+.status-button {
+  border-radius: 10px;
+  border: none;
+  padding: 8px 12px;
+  min-height: 32px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}

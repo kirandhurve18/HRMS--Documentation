@@ -1,0 +1,88 @@
+.btn-teal {
+  background-color: #008080;
+  border-color: #008080;
+  color: white;
+}
+
+.btn-teal:hover {
+  background-color: #006666;
+  border-color: #006666;
+}
+
+/* Optional: consistent card styling */
+.custom-card {
+  border-radius: 1rem;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease-in-out;
+}
+
+
+  /* For large screens */
+  @media (min-width: 1400px) {
+    .custom-card-wrapper {
+      max-width: 1255px;
+    }
+
+    .custom-card {
+      height: 661px;
+    }
+  }
+
+     .leave-box {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .leave-title {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .leave-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .leave-row:last-child {
+      border-bottom: none;
+    }
+
+    .leave-type {
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .leave-item {
+      text-align: center;
+      width: 60px;
+    }
+
+    .leave-total {
+      font-weight: bold;
+    }
+
+    .info-icon {
+      font-size: 12px;
+      color: #6c757d;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 576px) {
+      .leave-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .leave-item {
+        width: 100%;
+        text-align: left;
+        margin-top: 5px;
+      }
+    }

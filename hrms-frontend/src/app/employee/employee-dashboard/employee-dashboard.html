@@ -1,0 +1,124 @@
+<div class="container-fluid" style="background-color: #ECF0F5; min-height: 100vh; padding-top: 1rem;">
+  <div class="row">
+
+   
+    <div class="col-lg-4 col-md-12 mb-3">
+      <div *ngIf="attendanceStatus === 'present'" class="p-3 rounded bg-success-subtle d-flex align-items-center gap-3 shadow-sm">
+        <i class="bi bi-check-circle-fill text-success fs-3"></i>
+        <div>
+          <div class="fw-semibold text-success">Present</div>
+          <small>Check in Time :- <strong>{{ checkInTime }}</strong></small>
+        </div>
+      </div>
+      <div *ngIf="attendanceStatus === 'late'" class="p-3 rounded bg-warning-subtle d-flex align-items-center gap-3 shadow-sm">
+        <i class="bi bi-exclamation-triangle-fill text-warning fs-3"></i>
+        <div>
+          <div class="fw-semibold text-warning">Late</div>
+          <small>Check in Time :- <strong>{{ checkInTime }}</strong></small>
+        </div>
+      </div>
+      <div *ngIf="attendanceStatus === 'not_checked'" class="p-3 rounded bg-info-subtle d-flex align-items-center gap-3 shadow-sm">
+        <i class="bi bi-question-circle-fill text-info fs-3"></i>
+        <div>
+          <div class="fw-semibold text-info">Not Checked In Yet</div>
+          <small>Mark your attendance to avoid late mark</small>
+        </div>
+      </div>
+      <div *ngIf="attendanceStatus === 'leave'" class="p-3 rounded bg-primary-subtle d-flex align-items-center gap-3 shadow-sm">
+        <i class="bi bi-moon-fill text-primary fs-3"></i>
+        <div>
+          <div class="fw-semibold text-primary">You're on Leave Today</div>
+          <small>No attendance required. Enjoy your time off!</small>
+        </div>
+      </div>
+      <div *ngIf="attendanceStatus === 'weekly_off'" class="p-3 rounded bg-secondary-subtle d-flex align-items-center gap-3 shadow-sm">
+        <i class="bi bi-calendar-x-fill text-secondary fs-3"></i>
+        <div>
+          <div class="fw-semibold text-secondary">It's Your Weekly Off</div>  
+          <small>No attendance required today.</small>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="col-lg-4 col-md-12 mb-3">
+      <div class="p-3 bg-white rounded shadow-sm">
+        <h5 class="fw-bold text-center mb-3">My Tasks</h5>
+
+       
+        <ul class="list-group mb-3" *ngIf="tasks.length > 0">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let task of tasks; let i = index">
+            <span>{{ task }}</span>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-outline-primary" (click)="editTask(i)">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="deleteTask(i)">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </div>
+          </li>
+        </ul>
+    
+
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-sm" style="background-color: #009688; color:aliceblue;" (click)="openAddTaskPopup()">
+            + Add Item
+          </button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="col-lg-4 col-md-12 mb-3">
+      <div class="bg-white rounded shadow-sm h-100">
+        <h4 class="fw-bold text-center mb-3 px-3 pt-3">🏆 Winners for April 2025 🏆</h4>
+        <hr class="m-0" style="border: 2px solid #009688;">
+        <div class="px-3 py-3 d-flex justify-content-between align-items-center">
+          <img src="Polygon 1.svg" alt="Leader">
+          <div class="text-center w-100">
+            <div class="fw-medium">Leader of the Month</div>
+            <div class="fw-bold fs-6">Om Gaikwad</div>
+            <div class="small">Business Analyst / Founder's Office</div>
+          </div>
+        </div>
+        <hr class="m-0" style="border: 2px solid #009688;">
+        <div class="px-3 py-3 d-flex justify-content-between align-items-center">
+          <img src="Polygon 4.svg" alt="Performer">
+          <div class="text-center w-100">
+            <div class="fw-medium">Performer of the Month</div>
+            <div class="fw-bold fs-6">Ibrahim Kothari</div>
+            <div class="small">Executive / Graphics Design</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div 
+  *ngIf="showAddTaskPopup" 
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+  style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050;">
+  <div class="rounded shadow bg-light" style="min-width: 400px;">
+    <div class="d-flex justify-content-between align-items-center rounded-top"
+         style="background-color: #009688; padding: 0.75rem 1rem;">
+      <h5 class="text-white m-0">{{ isEditing ? 'Update Task' : 'Add Task' }}</h5>
+      <img src="Vector.svg" 
+           alt="Close" 
+           (click)="closeAddTaskPopup()"
+           style="cursor: pointer; width: 16px; height: 16px;">
+    </div>
+
+    <div class="p-3">
+      <label for="taskTitle" class="form-label fw-semibold">Task Title <span class="text-danger">*</span></label>
+      <input type="text" class="form-control mb-3" id="taskTitle" placeholder="Enter Task Title" [(ngModel)]="newTaskTitle">
+      <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-danger" (click)="closeAddTaskPopup()">Cancel</button>
+        <button class="btn btn-success" (click)="submitTask()">{{ isEditing ? 'Update' : 'Submit' }}</button>
+      
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,198 @@
+<div class="container-fluid">
+  <div
+    class="d-flex rounded flex-wrap justify-content-between align-items-center bg-white p-3 box-shadow mb-3"
+  >
+    <div class="d-flex align-items-center mb-2 mb-md-0">
+      <h5 class="fw-bold">Attendance Report</h5>
+    </div>
+    <div class="d-flex align-items-center flex-wrap" style="gap: 24px">
+      <button class="btn btn-white" (click)="navigateToDailyAttendance()">
+        Daily Attendance
+      </button>
+      <button class="btn btn-teal">Employee Attendance Report</button>
+    </div>
+  </div>
+  <div class="d-flex flex-column rounded bg-white p-3 box-shadow">
+    <div class="d-flex flex-column">
+      <div class="d-flex align-items-center mb-2">
+        <h5 class="fw-bold">Employee Attendance Report</h5>
+      </div>
+      <div class="d-flex align-items-center justify-content-between flex-wrap">
+        <div class="d-flex align-items-center gap-3 mb-3 mb-lg-0">
+          <label class="fw-bold" for="employee">Select Employee:</label>
+          <select name="employee" id="employee" class="form-select">
+            <option value="">Select Employee</option>
+            <option value="1">Employee 1</option>
+            <option value="2">Employee 2</option>
+            <option value="3">Employee 3</option>
+          </select>
+        </div>
+        <div class="d-flex align-items-center flex-wrap gap-3">
+          <input type="date" class="form-control" style="width: 150px" />
+          <input type="date" class="form-control" style="width: 150px" />
+          <button class="btn btn-teal px-4">Get Attendance</button>
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        width: 100%;
+        height: 2px;
+        background-color: #009688;
+        margin: 1rem 0;
+      "
+    ></div>
+    <div
+      class="d-flex justify-content-between align-items-center flex-wrap mb-3"
+    >
+      <div class="d-flex align-items-center mb-2 mb-md-0">
+        <label class="me-2 mb-0">Show</label>
+        <select
+          [(ngModel)]="entriesToShow"
+          class="form-select form-select-sm"
+          style="width: 70px"
+        >
+          <option [value]="5">5</option>
+          <option [value]="10">10</option>
+          <option [value]="15">15</option>
+          <option [value]="20">20</option>
+        </select>
+        <span class="ms-2">entries</span>
+      </div>
+
+      <div class="input-group" style="max-width: 300px">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          class="form-control"
+          placeholder="Search Leave"
+        />
+        <span class="input-group-text bg-white">
+          <img src="search.svg" alt="Search" width="16" />
+        </span>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="table-header">
+          <tr>
+            <th>
+              S.No
+              <img
+                src="/sort-icon.png"
+                alt=""
+                width="20px"
+                height="20px"
+                style="cursor: pointer"
+              />
+            </th>
+
+            <th>
+              Check In Date
+              <img
+                src="/sort-icon.png"
+                alt=""
+                width="20px"
+                height="20px"
+                style="cursor: pointer"
+              />
+            </th>
+            <th>Check In Time</th>
+            <th>Check In Location</th>
+            <th>
+              Check Out Date
+              <img
+                src="/sort-icon.png"
+                alt=""
+                width="20px"
+                height="20px"
+                style="cursor: pointer"
+              />
+            </th>
+            <th>Check Out Time</th>
+            <th>Check Out Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of attendanceReportData">
+            <td>{{ item.SNo }}</td>
+            <td>{{ item.checkInDate }}</td>
+            <td>{{ item.checkInTime }}</td>
+            <td>{{ item.checkInLocation }}</td>
+            <td>{{ item.checkOutDate }}</td>
+            <td>{{ item.checkOutTime }}</td>
+            <td>{{ item.checkOutLocation }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer text-muted text-start">
+      Showing {{ attendanceReportData.length }} of {{
+      attendanceReportData.length }} entries
+    </div>
+  </div>
+  <div class="row gx-4 gy-4 mt-3">
+    <div class="col-sm-12 col-md-6 mx-auto">
+      <div class="rounded bg-white p-3 box-shadow">
+        <div class="d-flex align-items-center justify-content-center mb-3">
+          <h5 class="fw-bold">Attendance Summary</h5>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table" style="border: 1px solid #000">
+            <tbody>
+              <tr class="bg-light-teal">
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Total Days
+                </td>
+                <td style="width: 50%; border: 1px solid #000">31</td>
+              </tr>
+              <tr>
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Week Off
+                </td>
+                <td style="width: 50%; border: 1px solid #000">8</td>
+              </tr>
+              <tr class="bg-light-teal">
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Present
+                </td>
+                <td style="width: 50%; border: 1px solid #000">18</td>
+              </tr>
+              <tr>
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Absent
+                </td>
+                <td style="width: 50%; border: 1px solid #000">10</td>
+              </tr>
+              <tr>
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Half Day Leave
+                </td>
+                <td style="width: 50%; border: 1px solid #000">0</td>
+              </tr>
+              <tr>
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Late Mark
+                </td>
+                <td style="width: 50%; border: 1px solid #000">7</td>
+              </tr>
+              <tr>
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Early Leave
+                </td>
+                <td style="width: 50%; border: 1px solid #000">10</td>
+              </tr>
+              <tr>
+                <td class="fw-bold" style="width: 50%; border: 1px solid #000">
+                  Late Joining
+                </td>
+                <td style="width: 50%; border: 1px solid #000">10</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://7l1fs6c9-3005.inc1.devtunnels.ms",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

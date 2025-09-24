@@ -1,0 +1,173 @@
+<div class="container-fluid">
+
+  <!-- Header -->
+  <div class="my-3">
+    <div class="bg-white rounded shadow-sm px-3 py-3 d-flex justify-content-between align-items-center flex-wrap">
+      <h5 class="fw-bold mb-0">Team Hierarchy</h5>
+      <div class="d-flex flex-wrap gap-2 ms-auto mt-2 mt-md-0">
+        <button class="btn fw-semibold px-3 py-2" style="background-color: #E5f4f3;" data-bs-toggle="modal" data-bs-target="#teamModal">
+          Hierarchy View
+        </button>
+        <button class="btn fw-semibold px-3 py-2 text-white" style="background-color: #009688;" data-bs-toggle="modal" data-bs-target="#teamModal">
+          Bulk Update
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="row mb-3">
+    <div class="col-md-6 col-12 d-flex align-items-center mb-2 mb-md-0">
+      <label class="me-2 mb-0">Show</label>
+      <select [(ngModel)]="entriesPerPage" class="form-select form-select-sm w-auto">
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="15">15</option>
+        <option [value]="20">20</option>
+      </select>
+      <span class="ms-2">entries</span>
+    </div>
+    <div class="col-md-3 col-12">
+      <div class="input-group">
+        <input type="text" [(ngModel)]="searchQuery" class="form-control" placeholder="Search Employee" />
+        <span class="input-group-text bg-white">
+          <i class="bi bi-search"></i>
+        </span>
+      </div>
+    </div>
+    <div class="col-md-3 col-12 mt-2 mt-md-0">
+      <div class="input-group">
+       <button class="form-control d-flex justify-content-between bg-white border">
+          <span style="color: #00C000;">Download List</span>
+          <img src="file-excel-solid 1.svg" width="24" height="24" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive" style="overflow-x: auto;">
+    <div style="min-width: 1600px;">
+      <div class="row gx-0 text-white fw-bold text-center d-none d-md-flex" style="background-color: #009688; height: 50px;">
+        <div class="col">Emp ID</div>
+        <div class="col">Employee Name</div>
+        <div class="col">Designation</div>
+        <div class="col">Department</div>
+        <div class="col">City</div>
+        <div class="col">DOJ</div>
+        <div class="col">Work Mode</div>
+        <div class="col">Role</div>
+        <div class="col">Mobile Number</div>
+        <div class="col">Company Email</div>
+        <div class="col">Team Lead</div>
+        <div class="col">Team Manager</div>
+        <div class="col">Reviewer</div>
+      </div>
+
+      <div *ngFor="let emp of filteredEmployees; let i = index"
+           class="row gx-0 border-bottom py-3 align-items-center text-start text-md-center"
+           [ngStyle]="{ 'background-color': i % 2 === 1 ? '#E5F4F3' : 'transparent' }">
+        <div class="col">{{ i + 1 }}</div>
+        <div class="col">{{ emp.first_name }} {{ emp.middle_name }} {{ emp.last_name }}</div>
+        <div class="col">{{ emp.designation }}</div>
+        <div class="col">{{ emp.department }}</div>
+        <div class="col">{{ emp.city }}</div>
+        <div class="col">{{ emp.date_of_joining | date: 'dd-MM-yyyy' }}</div>
+        <div class="col">{{ emp.work_mode }}</div>
+        <div class="col">{{ emp.role }}</div>
+        <div class="col">{{ emp.whatsapp_number }}</div>
+        <div class="col">{{ emp.company_email }}</div>
+        <div class="col">{{ emp.team_lead }}</div>
+        <div class="col">{{ emp.team_manager }}</div>
+        <div class="col">{{ emp.reviewer }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-muted mt-3">Showing {{ filteredEmployees.length }} of {{ employees.length }} entries</div>
+
+ <!-- Modal -->
+<div class="modal fade" id="teamModal" tabindex="-1" aria-labelledby="teamModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content" style="max-width: 1200px; width: 100%; max-height: 90vh;">
+      <!-- Modal Header -->
+      <div class="modal-header" style="background-color: #009688;">
+        <h5 class="modal-title text-white fw-bold" id="teamModalLabel">Bulk Update Team Structure</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="row">
+          <!-- Left Column: Selected Employees -->
+          <div class="col-md-6">
+            <p class="fw-semibold mb-3">Updates will be applied for below selected Employees :-</p>
+            <table class="table table-bordered table-sm mb-0">
+              <thead style="background-color: #009688;" class="text-white text-center">
+                <tr>
+                  <th class="w-25">Sr No.</th>
+                  <th>Employee Name whose details will be updated</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let emp of selectedEmployees; let i = index" [ngClass]="{ 'table-light': i % 2 === 1 }">
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td>{{ emp.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right Column: Vertical Dropdowns -->
+          <div class="col-md-6 ps-md-5 mt-4 mt-md-0">
+            <div class="d-flex flex-column">
+              <div>
+                <label class="form-label fw-semibold">Role</label>
+                <select class="form-select">
+                  <option>Select New Role to assign</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label fw-semibold">Department</label>
+                <select class="form-select">
+                  <option>Select New Department to assign</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label fw-semibold">Designation</label>
+                <select class="form-select">
+                  <option>Select New Designation to assign</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label fw-semibold">Team Lead</label>
+                <select class="form-select">
+                  <option>Select New Team Lead to assign</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label fw-semibold">Team Manager</label>
+                <select class="form-select">
+                  <option>Select New Team Manager to assign</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label fw-semibold">Team Reviewer</label>
+                <select class="form-select">
+                  <option>Select New Team Reviewer to assign</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary px-4">Cancel</button>
+        <button type="button" class="btn px-4 text-white" style="background-color: #009688;">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+

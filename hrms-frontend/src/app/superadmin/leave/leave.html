@@ -1,0 +1,1099 @@
+<div class="container-fluid">
+  <div class="d-flex align-items-center rounded bg-white p-3 box-shadow mb-3">
+    <h5 class="fw-bold mb-0">Leave Management</h5>
+  </div>
+  <div class="row g-2">
+    <div class="col-lg-9 col-sm-12">
+      <!-- Leave Status Card -->
+      <div class="card shadow custom-card p-2">
+        <div class="d-flex align-items-center mb-0 flex-wrap gap-3 ps-2 pe-2">
+          <h5
+            class="fw-bold"
+            [ngStyle]="{ color: selectedTab === 'status' ? '#009688' : '#000', borderBottom: selectedTab === 'status' ? '2px solid #009688' : 'none' }"
+            (click)="selectTab('status')"
+            style="cursor: pointer"
+          >
+            Leave Status
+          </h5>
+          <h5
+            class="fw-bold"
+            [ngStyle]="{ color: selectedTab === 'apply' ? '#009688' : '#000', borderBottom: selectedTab === 'apply' ? '2px solid #009688' : 'none' }"
+            (click)="selectTab('apply')"
+            style="cursor: pointer"
+          >
+            Apply Leave
+          </h5>
+          <h5
+            class="fw-bold"
+            [ngStyle]="{ color: selectedTab === 'team' ? '#009688' : '#000', borderBottom: selectedTab === 'team' ? '2px solid #009688' : 'none' }"
+            (click)="selectedTab = 'team'"
+            style="cursor: pointer"
+          >
+            My Team Leaves
+          </h5>
+          <h5
+            class="fw-bold"
+            [ngStyle]="{ color: selectedTab === 'pending' ? '#009688' : '#000', borderBottom: selectedTab === 'pending' ? '2px solid #009688' : 'none' }"
+            (click)="selectedTab = 'pending'"
+            style="cursor: pointer"
+          >
+            Pending Reviewer
+          </h5>
+        </div>
+        <hr class="hr-line" style="margin-top: 5px" />
+
+        <div *ngIf="selectedTab === 'status'" class="table-responsive p-2">
+          <table class="table">
+            <thead class="table-header">
+              <tr>
+                <th>Sr no</th>
+                <th>Apply Date</th>
+                <th>EL</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Total Days</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leave of leaveData">
+                <td>{{ leave.srno }}</td>
+                <td>{{ leave.applyDate }}</td>
+                <td>{{ leave.el }}</td>
+                <td>{{ leave.leaveType }}</td>
+                <td>{{ leave.startDate }}</td>
+                <td>{{ leave.endDate }}</td>
+                <td>{{ leave.totalDays }}</td>
+                <td>{{ leave.reason }}</td>
+                <td style="text-align: start">
+                  <div
+                    class="status-button"
+                    [ngStyle]="{ backgroundColor: getStatusBgColor(leave.status), color: leave.status === 'Pending Manager' ? '#000' : '#fff' }"
+                  >
+                    {{ leave.status }}
+                  </div>
+                </td>
+                <td style="text-align: start">
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <i
+                      class="bi bi-eye"
+                      (click)="viewLeaveDetails(leave)"
+                      style="color: #009688; cursor: pointer; font-size: 18px"
+                    ></i>
+                    <i
+                      class="bi bi-x"
+                      *ngIf="leave.status === 'Pending Manager'"
+                      (click)="rejectLeaveRequest(leave)"
+                      style="
+                        background-color: #dc3545;
+                        color: #fff;
+                        cursor: pointer;
+                        border-radius: 50%;
+                        width: 15px;
+                        height: 15px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                        font-weight: 700;
+                      "
+                    ></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="selectedTab === 'apply'" class="d-flex flex-column p-2">
+          <div
+            class="d-flex justify-content-between align-items-center flex-wrap mb-3 gap-3"
+          >
+            <h5 class="fw-bold" style="white-space: nowrap">
+              Leave Application
+            </h5>
+            <div class="d-flex flex-column flex-md-row gap-3">
+              <div><strong>Manager :-</strong> Abhisek Jaiswal</div>
+              <div><strong>Reviewer :-</strong> Anirudha Kotgire</div>
+            </div>
+          </div>
+
+          <div class="mb-3 d-flex align-items-center gap-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="leaveDay"
+                id="fullDay"
+                [value]="'fullDay'"
+                [(ngModel)]="leaveType"
+                (change)="onLeaveTypeChange()"
+                style="cursor: pointer"
+                checked
+              />
+              <label
+                class="form-check-label"
+                for="fullDay"
+                style="cursor: pointer"
+                >Full Day</label
+              >
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="leaveDay"
+                id="halfDay"
+                [value]="'halfDay'"
+                [(ngModel)]="leaveType"
+                (change)="onLeaveTypeChange()"
+                style="cursor: pointer"
+              />
+              <label
+                class="form-check-label"
+                for="halfDay"
+                style="cursor: pointer"
+                >Half Day</label
+              >
+            </div>
+          </div>
+
+          <div class="row mb-3 align-items-center">
+            <label for="startDate" class="col-sm-2 col-form-label"
+              >Start Date</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                class="form-control"
+                id="startDate"
+                placeholder="Enter start Date"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3 align-items-center">
+            <label for="endDate" class="col-sm-2 col-form-label"
+              >End Date</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                class="form-control"
+                id="endDate"
+                placeholder="Enter End Date"
+              />
+            </div>
+          </div>
+
+          <div class="mb-3 row align-items-center">
+            <label for="leaveType" class="col-sm-2 col-form-label"
+              >Leave Type</label
+            >
+            <div class="col-sm-4">
+              <select class="form-select" id="leaveType">
+                <option selected disabled>Select Leave Type</option>
+                <option>Paid Leave</option>
+                <option>Sick Leave</option>
+                <option>Unpaid Leave</option>
+                <option>Comp Off</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3 row align-items-center">
+            <label for="noOfDays" class="col-sm-2 col-form-label"
+              >No. of Days</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                class="form-control text-muted"
+                id="noOfDays"
+                placeholder="Days (Auto Calculated)"
+                readonly
+                style="background-color: #e5f4f3"
+              />
+            </div>
+          </div>
+
+          <div class="mb-3 row align-items-center">
+            <label for="reason" class="col-form-label col-sm-2">Reason</label>
+            <div class="col-sm-4">
+              <textarea
+                class="form-control"
+                id="reason"
+                rows="3"
+                placeholder="Enter your Reason"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-teal">Submit</button>
+          </div>
+        </div>
+        <div *ngIf="selectedTab === 'team'" class="d-flex flex-column p-2">
+          <div class="row g-3 w-100 mb-3">
+            <div class="col-12 col-sm d-flex align-items-center gap-3">
+              <input
+                type="text"
+                class="form-control"
+                style="height: 42px"
+                placeholder="Search Team member"
+              />
+              <select
+                name="select status"
+                id="select status"
+                class="form-select"
+                style="height: 42px"
+              >
+                <option selected disabled>Select Status</option>
+                <option>Pending Manager</option>
+                <option>Pending Reviewer</option>
+                <option>Approved</option>
+                <option>Rejected</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-sm-auto ms-sm-auto">
+              <button
+                class="btn btn-teal w-100 w-md-auto"
+                (click)="applyLeaveForTeamMember()"
+                style="font-size: 15px; font-weight: 700; height: 42px"
+              >
+                Apply Leave for Team Member
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="table-header">
+                <tr>
+                  <th>Name</th>
+                  <th>EL</th>
+                  <th>Leave Type</th>
+                  <th>Apply Date</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Total Days</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let myteamleave of myTeamLeaveData">
+                  <td>{{ myteamleave.name }}</td>
+                  <td>{{ myteamleave.el }}</td>
+                  <td>{{ myteamleave.leaveType }}</td>
+                  <td>{{ myteamleave.applyDate }}</td>
+                  <td>{{ myteamleave.startDate }}</td>
+                  <td>{{ myteamleave.endDate }}</td>
+                  <td>{{ myteamleave.totalDays }}</td>
+                  <td>{{ myteamleave.reason }}</td>
+                  <td>
+                    <button
+                      class="status-button"
+                      [ngStyle]="{ backgroundColor: getStatusBgColor(myteamleave.status), color: myteamleave.status === 'Pending Manager' ? '#000' : '#fff' }"
+                    >
+                      {{ myteamleave.status }}
+                    </button>
+                  </td>
+                  <td>
+                    <div
+                      class="d-flex align-items-center justify-content-center"
+                    >
+                      <i
+                        class="bi bi-eye"
+                        (click)="reviewLeaveRequest(myteamleave)"
+                        style="color: #009688; cursor: pointer; font-size: 18px"
+                      ></i>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="selectedTab === 'pending'" class="d-flex flex-column p-2">
+          <div
+            class="d-flex align-items-center flex-wrap mb-3 w-100"
+            style="gap: 20px"
+          >
+            <input
+              type="text"
+              class="form-control grow-xs-only"
+              style="height: 42px"
+              placeholder="Search Team member"
+            />
+            <select
+              name="select status"
+              id="select status"
+              class="form-select grow-xs-only"
+              style="height: 42px"
+            >
+              <option selected disabled>Select Status</option>
+              <option>Pending Manager</option>
+              <option>Pending Reviewer</option>
+              <option>Approved</option>
+              <option>Rejected</option>
+            </select>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="table-header">
+                <tr>
+                  <th>Name</th>
+                  <th>EL</th>
+                  <th>Leave Type</th>
+                  <th>Apply Date</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Total Days</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let myteamleave of myTeamLeaveData">
+                  <td>{{ myteamleave.name }}</td>
+                  <td>{{ myteamleave.el }}</td>
+                  <td>{{ myteamleave.leaveType }}</td>
+                  <td>{{ myteamleave.applyDate }}</td>
+                  <td>{{ myteamleave.startDate }}</td>
+                  <td>{{ myteamleave.endDate }}</td>
+                  <td>{{ myteamleave.totalDays }}</td>
+                  <td>{{ myteamleave.reason }}</td>
+                  <td>
+                    <button
+                      class="status-button"
+                      [ngStyle]="{ backgroundColor: getStatusBgColor(myteamleave.status), color: myteamleave.status === 'Pending Manager' ? '#000' : '#fff' }"
+                    >
+                      {{ myteamleave.status }}
+                    </button>
+                  </td>
+                  <td>
+                    <div
+                      class="d-flex align-items-center justify-content-center"
+                    >
+                      <i
+                        class="bi bi-eye"
+                        (click)="reviewLeaveRequest(myteamleave)"
+                        style="color: #009688; cursor: pointer"
+                      ></i>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-12">
+      <!-- Available Leaves Card -->
+      <div
+        *ngIf="selectedTab === 'status' || selectedTab === 'apply'"
+        class="card shadow custom-card"
+        style="padding: 5px"
+      >
+        <h5 class="fw-bold text-center mb-2" style="padding: 5px 10px">
+          Available Leaves for the Year
+        </h5>
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="table-header">
+              <tr>
+                <th>Leave Type</th>
+                <th>Taken</th>
+                <th>Available</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leave of leaveSummaryData">
+                <td class="table-cell">{{ leave.type }}</td>
+                <td class="table-cell">{{ leave.taken }}</td>
+                <td class="table-cell">{{ leave.available }}</td>
+                <td class="table-cell">{{ leave.total }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        *ngIf="selectedTab === 'team' "
+        class="card"
+        style="padding: 5px; border: none; border-radius: 10px"
+      >
+        <h5 class="fw-bold text-center mb-1" style="padding: 5px 10px">
+          Team Leaves Taken this Year
+        </h5>
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="table-header">
+              <tr>
+                <th>Member Name</th>
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Vibha Shinde</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>Rajesh Kumar</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>Rajesh Kumar</td>
+                <td>10</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        *ngIf="selectedTab === 'team' || selectedTab === 'pending'"
+        class="card"
+        [ngStyle]="{
+          padding: '5px',
+          marginTop: selectedTab === 'team' ? '10px' : '0',
+          border: 'none',
+          borderRadius: '10px'
+        }"
+      >
+        <h6
+          class="fw-bold text-center mb-1"
+          style="padding: 5px 10px; border-bottom: 2px solid #009688"
+        >
+          Current/Upcoming Leaves
+        </h6>
+        <div *ngFor="let leave of upcomingLeaveData">
+          <div class="mb-2" style="border-bottom: 1px solid #009688">
+            <span class="d-block" style="font-size: 16px; font-weight: 600"
+              >{{ leave.name }} ({{ leave.designation }})</span
+            >
+            <span class="d-block" style="font-size: 16px; font-weight: 400"
+              >{{ leave.startDate }} to {{ leave.endDate }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="showViewDetailsModal"
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+  style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050"
+>
+  <div class="rounded shadow bg-light" style="min-width: 450px">
+    <div
+      class="d-flex justify-content-between align-items-center rounded-top"
+      style="background-color: #009688; padding: 0.75rem 1rem"
+    >
+      <h5 class="text-white m-0" style="font-size: 30px; font-weight: 600">
+        View Leave
+      </h5>
+      <img
+        src="Vector.svg"
+        alt="Close"
+        (click)="closeViewDetailsModal()"
+        style="cursor: pointer; width: 24px; height: 24px"
+      />
+    </div>
+
+    <div class="p-3 d-flex flex-column gap-2">
+      <div class="d-flex align-items-center gap-4">
+        <label for="applyDate" class="form-label fw-semibold modal-input-label"
+          >Apply Date
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="applyDate"
+          [value]="selectedLeave.applyDate"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="leaveType" class="form-label fw-semibold modal-input-label"
+          >Leave Type
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="leaveType"
+          [value]="selectedLeave.leaveType"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="startDate" class="form-label fw-semibold modal-input-label"
+          >Start Date
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="startDate"
+          [value]="selectedLeave.startDate"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="endDate" class="form-label fw-semibold modal-input-label"
+          >End Date
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="endDate"
+          [value]="selectedLeave.endDate"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="totalDays" class="form-label fw-semibold modal-input-label"
+          >Total Days
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="totalDays"
+          [value]="selectedLeave.totalDays"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="reason" class="form-label fw-semibold modal-input-label"
+          >Reason
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="reason"
+          [value]="selectedLeave.reason"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="status" class="form-label fw-semibold modal-input-label"
+          >Status
+        </label>
+        <span
+          [ngStyle]="{ backgroundColor: getStatusBgColor(selectedLeave.status), color: selectedLeave.status === 'Pending Manager' ? '#000' : '#fff' }"
+          style="
+            border-radius: 13px;
+            height: 26px;
+            width: 160px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          {{ selectedLeave.status }}
+        </span>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label
+          for="managerComments"
+          class="form-label fw-semibold modal-input-label"
+          style="white-space: wrap"
+          >Manager Comments
+        </label>
+        <textarea
+          class="form-control"
+          id="managerComments"
+          placeholder="Manager Comments"
+        ></textarea>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label
+          for="reviewerComments"
+          class="form-label fw-semibold modal-input-label"
+          style="white-space: wrap"
+          >Reviewer Comments
+        </label>
+        <textarea
+          class="form-control"
+          id="reviewerComments"
+          placeholder="Reviewer Comments"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="showApplyLeaveForTeamMemberModal"
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+  style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050"
+>
+  <div
+    class="rounded shadow bg-light apply-leave-modal"
+    style="min-width: 450px; overflow-y: auto; max-height: 100vh"
+  >
+    <div
+      class="d-flex justify-content-between align-items-center rounded-top"
+      style="background-color: #009688; padding: 0.75rem 1rem"
+    >
+      <h5 class="text-white m-0" style="font-size: 25px; font-weight: 600">
+        Apply Leave for Team Member
+      </h5>
+      <img
+        src="Vector.svg"
+        alt="Close"
+        (click)="closeApplyLeaveForTeamMemberModal()"
+        style="cursor: pointer; width: 24px; height: 24px"
+      />
+    </div>
+
+    <div class="p-3 d-flex flex-column gap-2">
+      <div class="d-flex align-items-center gap-4">
+        <label for="teamMember" class="form-label fw-semibold modal-input-label"
+          >Team Member
+        </label>
+        <select name="teamMember" id="teamMember" class="form-select">
+          <option selected disabled>Select Team Member</option>
+          <option>John Doe</option>
+          <option>Jane Doe</option>
+          <option>Jim Doe</option>
+        </select>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="applyDate" class="form-label fw-semibold modal-input-label"
+          >Apply Date
+        </label>
+        <input
+          type="date"
+          class="form-control"
+          id="applyDate"
+          placeholder="Select Date"
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <span class="modal-input-label"></span>
+        <div
+          class="d-flex"
+          style="
+            border: 1px solid #d9d9d9;
+            padding: 5px;
+            gap: 20px;
+            flex-grow: 1;
+            border-radius: 6px;
+            background-color: #fff;
+          "
+        >
+          <div class="d-flex" style="gap: 8px">
+            <input
+              type="radio"
+              name="leaveDayType"
+              class="form-check-input"
+              id="fullDayTeamMember"
+              style="cursor: pointer"
+              checked
+            />
+            <label
+              for="fullDayTeamMember"
+              class="form-check-label"
+              style="cursor: pointer"
+              >Full Day</label
+            >
+          </div>
+          <div class="d-flex" style="gap: 8px">
+            <input
+              type="radio"
+              name="leaveDayType"
+              class="form-check-input"
+              id="halfDayTeamMember"
+              style="cursor: pointer"
+            />
+            <label
+              for="halfDayTeamMember"
+              class="form-check-label"
+              style="cursor: pointer"
+              >Half Day</label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="leaveType" class="form-label fw-semibold modal-input-label"
+          >Leave Type
+        </label>
+        <select name="leaveType" id="leaveType" class="form-select">
+          <option selected disabled>Select Leave Type</option>
+          <option>Paid</option>
+          <option>Unpaid</option>
+        </select>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="startDate" class="form-label fw-semibold modal-input-label"
+          >Start Date
+        </label>
+        <input
+          type="date"
+          class="form-control"
+          style="cursor: pointer"
+          id="startDate"
+          placeholder="Select Start Date"
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="endDate" class="form-label fw-semibold modal-input-label"
+          >End Date
+        </label>
+        <input
+          type="date"
+          class="form-control"
+          style="cursor: pointer"
+          id="endDate"
+          placeholder="Select End Date"
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="totalDays" class="form-label fw-semibold modal-input-label"
+          >No. of Days
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="totalDays"
+          placeholder="Enter No. of Days"
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="reason" class="form-label fw-semibold modal-input-label"
+          >Reason
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="reason"
+          placeholder="Enter Reason"
+        />
+      </div>
+      <!-- <div class="d-flex align-items-center gap-4">
+        <label for="status" class="form-label fw-semibold modal-input-label"
+          >Status
+        </label>
+        <span
+          [ngStyle]="{ backgroundColor: getStatusBgColor(selectedLeave.status), color: selectedLeave.status === 'Pending Manager' ? '#000' : '#fff' }"
+          style="
+            border-radius: 13px;
+            height: 26px;
+            width: 160px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          {{ selectedLeave.status }}
+        </span>
+      </div> -->
+      <div class="d-flex align-items-center gap-4">
+        <label
+          for="managerComments"
+          class="form-label fw-semibold modal-input-label"
+          style="white-space: wrap"
+          >Manager Comments
+        </label>
+        <textarea
+          class="form-control"
+          id="managerComments"
+          placeholder="Manager Comments"
+        ></textarea>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label
+          for="reviewerComments"
+          class="form-label fw-semibold modal-input-label"
+          style="white-space: wrap"
+          >Reviewer Comments
+        </label>
+        <textarea
+          class="form-control"
+          id="reviewerComments"
+          placeholder="Reviewer Comments"
+        ></textarea>
+      </div>
+      <div class="d-flex justify-content-end gap-4 mt-3 mb-2">
+        <button
+          class="btn"
+          (click)="closeApplyLeaveForTeamMemberModal()"
+          style="
+            width: 100px;
+            background-color: #6c757d;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+          "
+        >
+          Cancel
+        </button>
+        <button
+          class="btn"
+          style="
+            width: 100px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+          "
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="showReviewLeaveRequestModal"
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+  style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050"
+>
+  <div class="rounded shadow bg-light" style="min-width: 450px">
+    <div
+      class="d-flex justify-content-between align-items-center rounded-top"
+      style="background-color: #009688; padding: 0.75rem 1rem"
+    >
+      <h5 class="text-white m-0" style="font-size: 25px; font-weight: 600">
+        Review Leave Request
+      </h5>
+      <img
+        src="Vector.svg"
+        alt="Close"
+        (click)="closeReviewLeaveRequestModal()"
+        style="cursor: pointer; width: 24px; height: 24px"
+      />
+    </div>
+
+    <div class="p-3 d-flex flex-column gap-2">
+      <div class="d-flex align-items-center gap-4">
+        <label for="by" class="form-label fw-semibold modal-input-label"
+          >By
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="by"
+          [value]="selectedReviewLeave.name"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="applyDate" class="form-label fw-semibold modal-input-label"
+          >Apply Date
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="applyDate"
+          [value]="selectedReviewLeave.applyDate"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="leaveType" class="form-label fw-semibold modal-input-label"
+          >Leave Type
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="leaveType"
+          [value]="selectedReviewLeave.leaveType"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="startDate" class="form-label fw-semibold modal-input-label"
+          >Start Date
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="startDate"
+          [value]="selectedReviewLeave.startDate"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="endDate" class="form-label fw-semibold modal-input-label"
+          >End Date
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="endDate"
+          [value]="selectedReviewLeave.endDate"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="totalDays" class="form-label fw-semibold modal-input-label"
+          >Total Days
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="totalDays"
+          [value]="selectedReviewLeave.totalDays"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="reason" class="form-label fw-semibold modal-input-label"
+          >Reason
+        </label>
+        <input
+          type="text"
+          style="display: flex"
+          class="form-control"
+          id="reason"
+          [value]="selectedReviewLeave.reason"
+          readonly
+        />
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label for="status" class="form-label fw-semibold modal-input-label"
+          >Status
+        </label>
+        <span
+          [ngStyle]="{ backgroundColor: getStatusBgColor(selectedReviewLeave.status), color: selectedReviewLeave.status === 'Pending Manager' ? '#000' : '#fff' }"
+          style="
+            border-radius: 13px;
+            height: 26px;
+            width: 160px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          {{ selectedReviewLeave.status }}
+        </span>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label
+          for="managerComments"
+          class="form-label fw-semibold modal-input-label"
+          style="white-space: wrap"
+          >Manager Comments
+        </label>
+        <textarea
+          class="form-control"
+          id="managerComments"
+          placeholder="Manager Comments"
+        ></textarea>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <label
+          for="reviewerComments"
+          class="form-label fw-semibold modal-input-label"
+          style="white-space: wrap"
+          >Reviewer Comments
+        </label>
+        <textarea
+          class="form-control"
+          id="reviewerComments"
+          placeholder="Reviewer Comments"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="showRejectLeaveRequestModal"
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+  style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050"
+>
+  <div
+    class="rounded shadow bg-light apply-leave-modal"
+    style="min-width: 450px; overflow-y: auto; max-height: 100vh"
+  >
+    <div
+      class="d-flex justify-content-between align-items-center rounded-top"
+      style="background-color: #009688; padding: 0.75rem 1rem"
+    >
+      <h5 class="text-white m-0" style="font-size: 25px; font-weight: 600">
+        Leave Cancellation
+      </h5>
+      <img
+        src="Vector.svg"
+        alt="Close"
+        (click)="closeRejectLeaveRequestModal()"
+        style="cursor: pointer; width: 24px; height: 24px"
+      />
+    </div>
+
+    <div class="p-3 d-flex flex-column gap-2">
+      <div style="font-size: 16px; font-weight: 500">
+        Are you sure you want to cancel your leave request from
+        <span class="d-block" style="font-weight: 700">
+          {{ selectedRejectLeave.startDate }} to {{ selectedRejectLeave.endDate
+          }} ?
+        </span>
+      </div>
+      <div style="font-size: 16px; font-weight: 400; color: #00000080">
+        This action cannot be undone once the leave is cancelled.
+      </div>
+      <div class="d-flex justify-content-end gap-4 mt-2 mb-2">
+        <button
+          class="btn"
+          (click)="closeRejectLeaveRequestModal()"
+          style="
+            width: auto;
+            background-color: #6c757d;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 7px;
+          "
+        >
+          No, Go Back
+        </button>
+        <button
+          class="btn"
+          style="
+            width: auto;
+            background-color: #009688;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 7px;
+          "
+        >
+          Yes, Cancel Leave
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

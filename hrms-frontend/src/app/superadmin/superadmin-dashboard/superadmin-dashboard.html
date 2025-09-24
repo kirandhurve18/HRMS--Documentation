@@ -1,0 +1,293 @@
+<div class="container-fluid p-2">
+  <div class="container mb-3">
+    <div
+      class="row pe-3 d-flex align-items-center box-shadow rounded-4"
+      style="min-height: 130px; background-color: #ffffff !important"
+    >
+      <div class="col-4 body-title d-flex align-items-center">
+        <div class="w-100 d-flex flex-column align-items-center">
+          <span>Today's Attendance</span>
+          <span>Summary</span>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="row gap-3">
+          <!-- Present -->
+          <div
+            class="col attendance-summary-box"
+            style="background-color: #00ce0040; color: #28a745"
+          >
+            <span style="font-weight: 600"> Present </span>
+            <span class="attendance-no">{{ presentCount }}</span>
+          </div>
+
+          <!-- Late -->
+          <div
+            class="col attendance-summary-box"
+            style="background-color: #ffc10740; color: #ffc107"
+          >
+            <span style="font-weight: 600"> Late </span>
+            <span class="attendance-no">{{ lateCount }}</span>
+          </div>
+
+          <!-- On Time -->
+          <div
+            class="col attendance-summary-box"
+            style="background-color: #17a2b840; color: #17a2b8"
+          >
+            <span style="font-weight: 600"> On leave </span>
+            <span class="attendance-no">{{ onTimeCount }}</span>
+          </div>
+
+          <!-- On Leave -->
+          <!-- <div
+            class="col attendance-summary-box"
+            style="background-color: #3c8dbc40; color: #3c8dbc"
+          >
+            <span style="font-weight: 600"> On Leave </span>
+            <span class="attendance-no">{{ onLeaveCount }}</span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Columns -->
+  <div class="row g-2">
+    <!-- Admin Column -->
+    <div *ngIf="role === 'admin'" class="custom-col-lg-55 col-sm-12 mb-3">
+      <!-- Employees on Leave -->
+<!-- Employees on Leave Today -->
+<div class="card p-0 shadow-sm border-0 mb-3">
+  <div class="card-body p-0 m-1">
+    <p class="body-title text-center py-1 m-0">Employees on Leave Today</p>
+    <div class="p-2" style="overflow-y: auto; height: 250px">
+      <table class="table leave-table">
+        <thead>
+          <tr>
+            <th class="text-center leave-header sticky-header">Name</th>
+            <th class="text-center leave-header sticky-header">Department</th>
+            <th class="text-center leave-header sticky-header">Start Date</th>
+            <th class="text-center leave-header sticky-header">End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background-color: #E5F4F3">
+                <td class="text-center">Shrdadha Sonavane</td>
+            <td class="text-center">Development</td>
+            <td class="text-center">Birthdays</td>
+            <td class="text-center">07/02/2003</td>
+          </tr>
+          <tr>
+            <td class="text-center">Ruchi Malviya</td>
+            <td class="text-center">Buisness</td>
+            <td class="text-center"> Birthday</td>
+            <td class="text-center">15/05/2023</td>
+          </tr>
+          <tr style="background-color: #E5F4F3">
+            <td class="text-center">Nagesh Dawale</td>
+            <td class="text-center">Development</td>
+            <td class="text-center">Birthdays</td>
+            <td class="text-center">19/05/2000</td>
+            </tr>
+
+                                <tr>
+            <td class="text-center">Vibhu Tripathi</td>
+            <td class="text-center">Development</td>
+            <td class="text-center">Birthdays</td>
+            <td class="text-center">19/05/2000</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="card p-0 shadow-sm border-0">
+  <div class="card-body p-0 m-1">
+    <p class="body-title text-center py-2 m-0">Upcoming Birthdays / Work Anniversaries</p>
+    
+    <!-- Scrollable Row -->
+<div class="d-flex justify-content-center">
+  <div class="p-3 bg-light rounded-4 shadow-sm d-flex flex-column align-items-center text-center"
+       style="min-width: 200px;">
+    <img src="ibrahim.svg" class="rounded-circle mb-2" 
+         alt="Ibrahim Kothari" width="100" height="100">
+    <h6 class="m-0">Ibrahim Kothari</h6>
+    <small>07-05-2000</small><br>
+    <span class="badge bg-success mt-1">Birthday</span>
+  </div>
+</div>
+
+  </div>
+</div>
+
+
+    </div>
+
+    <!-- Approvals Column -->
+    <div class="custom-col-lg-27 col-sm-12 mb-3">
+      <div class="p-3 bg-white rounded shadow-sm mb-3">
+        <p class="body-title mb-3 text-center">Approvals Pending</p>
+        <div class="d-flex justify-content-between">
+          <span>Timesheets</span>
+          <div class="d-flex align-items-center">
+            <span>{{ approvalPendings.timeSheets }}</span>
+            <button class="btn btn-sm border-0">></button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>Leave Request</span>
+          <div class="d-flex align-items-center">
+            <span>{{ approvalPendings.leave_request }}</span>
+            <button class="btn btn-sm border-0">></button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>Leaves Pending Reviewer Approval</span>
+          <div class="d-flex align-items-center">
+            <span
+              >{{ approvalPendings.leaves_pendings_reviewer_approval }}</span
+            >
+            <button class="btn btn-sm border-0">></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Tasks -->
+      <div class="p-3 bg-white rounded shadow-sm">
+        <p class="body-title text-center mb-3">My Tasks</p>
+
+        <ul class="list-group mb-3" *ngIf="tasks.length > 0">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            *ngFor="let task of tasks; let i = index"
+          >
+            <span>{{ task }}</span>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-outline-primary" (click)="editTask(i)">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="deleteTask(i)">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </div>
+          </li>
+        </ul>
+
+        <div class="d-flex justify-content-end">
+          <button
+            class="btn btn-sm text-white"
+            style="background-color: #009688"
+            (click)="openAddTaskPopup()"
+          >
+            + Add Item
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Late Comers This Month -->
+    <div class="custom-col-lg-27 col-sm-12 mb-3">
+      <div class="d-flex justify-content-center">
+        <div
+          class="bg-white rounded shadow-sm w-100"
+          style="max-width: 400px"
+        >
+          <!-- Title -->
+          <p class="text-center fw-bold fs-5 pt-3 mb-3">
+            Late Comers This Month
+          </p>
+
+          <!-- Header Row -->
+          <div
+            class="d-flex justify-content-between fw-semibold px-4 py-2 text-white text-center"
+            style="background-color: #009688"
+          >
+            <div class="w-50">Name</div>
+            <div class="w-50">Count</div>
+          </div>
+
+          <!-- Data Rows -->
+          <div
+            class="d-flex justify-content-between px-4 py-2 text-center"
+          >
+            <div class="w-50">Nagesh Dawale</div>
+            <div class="w-50">2</div>
+          </div>
+          <div
+            class="d-flex justify-content-between px-4 py-2 text-center"
+            style="background-color: #e6f2f0"
+          >
+            <div class="w-50">Shraddha Sonavane</div>
+            <div class="w-50">2</div>
+          </div>
+          <div
+            class="d-flex justify-content-between px-4 py-2 text-center"
+          >
+            <div class="w-50">Ruchi Malviya</div>
+            <div class="w-50">1</div>
+          </div>
+
+          <div
+            class="d-flex justify-content-between px-4 py-2 text-center"
+            style="background-color: #e6f2f0"
+          >
+            <div class="w-50">&nbsp;</div>
+            <div class="w-50">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Task Modal -->
+<div
+  *ngIf="showAddTaskPopup"
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+  style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050"
+>
+  <div
+    class="rounded shadow bg-light"
+    style="min-width: 500px; max-width: 90%"
+  >
+    <div
+      class="d-flex justify-content-between align-items-center rounded-top"
+      style="background-color: #009688; padding: 0.75rem 1rem"
+    >
+      <h5 class="text-white m-0">
+        {{ isEditing ? "Update Task" : "Add Task" }}
+      </h5>
+      <img
+        src="Vector.svg"
+        alt="Close"
+        (click)="closeAddTaskPopup()"
+        style="cursor: pointer; width: 16px; height: 16px"
+      />
+    </div>
+    <div class="p-3">
+      <label for="taskTitle" class="form-label fw-semibold">
+        Task Title <span class="text-danger">*</span>
+      </label>
+      <input
+        type="text"
+        class="form-control mb-3"
+        id="taskTitle"
+        placeholder="Enter Task Title"
+        [(ngModel)]="newTaskTitle"
+        name="taskTitle"
+      />
+      <div class="d-flex justify-content-end gap-2">
+        <button class="btn btn-success" (click)="submitTask()">
+          {{ isEditing ? "Update" : "Submit" }}
+        </button>
+        <button class="btn btn-danger" (click)="closeAddTaskPopup()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
