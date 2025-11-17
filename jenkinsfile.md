@@ -50,9 +50,8 @@ Go to:
 Manage Jenkins → Plugins → Available Plugins
 
 Add Credenatial:
-* instll plugins
-* integrate tools - git , docker , node  
-
+* instll plugins - docker plugins , docker pipeline plugins , git , pipeline , pipeline stageview, 
+* integrate tools - git add credencial if repo is private , docker , node js .
 
 ```
  which docker 
@@ -60,7 +59,18 @@ Add Credenatial:
 ````
 which git
 ````
+if this is not working , add docker user and jenkins user .
 
+## Then add Jenkins user to docker group:
+````
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
+````
+## Maybe the container starts but dies immediately
+````
+docker logs backend-container
+````
+## sometimes have the port issues .
 
 <img width="1865" height="904" alt="image" src="https://github.com/user-attachments/assets/61393adb-1414-4e85-bc03-018ca9fc6edd" />
 
