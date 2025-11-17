@@ -60,3 +60,7 @@ Add Credenatial:
 ````
 which git
 ````
+
+
+<img width="1865" height="904" alt="image" src="https://github.com/user-attachments/assets/61393adb-1414-4e85-bc03-018ca9fc6edd" />
+
