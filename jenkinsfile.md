@@ -25,3 +25,21 @@ sudo systemctl start jenkins
 ````
 sudo systemctl status jenkins
 ````
+````
+sudo apt install docker.io -y
+````
+````
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
+````
+````
+http://YOUR_SERVER_IP:8080
+````
+````
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+````
+Install suggested plugins 
+````
+username-admin
+password-admin
+````
