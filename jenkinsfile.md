@@ -43,3 +43,11 @@ Install suggested plugins
 username-admin
 password-admin
 ````
+— Install Required Plugins
+
+Go to:
+
+Manage Jenkins → Plugins → Available Plugins
+
+Add Credenatial:
+
