@@ -50,4 +50,13 @@ Go to:
 Manage Jenkins → Plugins → Available Plugins
 
 Add Credenatial:
+* instll plugins
+* integrate tools - git , docker , node  
 
+
+```
+ which docker 
+````
+````
+which git
+````
