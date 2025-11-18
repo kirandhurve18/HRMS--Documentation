@@ -136,5 +136,31 @@ docker logs backend-container
 
 # Jenkins Steps -- PLUGINS , TOOLS , CREDENTIAL , CONFIGURATION - PIPELINE 
 
+## PLUGINS : 
+
+<img width="1400" height="400" alt="image" src="https://github.com/user-attachments/assets/0ff8b502-0567-4be7-8631-93c0a9148d32" />
+
+## Tools:
+
+<img width="1273" height="575" alt="image" src="https://github.com/user-attachments/assets/a7af75f9-8807-400d-9f6e-bfba9281cf6f" />
+
+## Credential 
+
+<img width="1395" height="738" alt="image" src="https://github.com/user-attachments/assets/a02b08bd-241b-4f48-a025-7c9a1213f522" />
+
+## Job -- configuration
+
+<img width="956" height="358" alt="image" src="https://github.com/user-attachments/assets/73525a17-8913-4909-9178-4f73dc09a433" />
+
+<img width="1325" height="639" alt="image" src="https://github.com/user-attachments/assets/b2bdf5a0-a6b1-42c6-8ae0-b2ab92f0dfd1" />
+
+<img width="1250" height="301" alt="image" src="https://github.com/user-attachments/assets/64f8a27f-1786-4967-8d92-f2ee1ef864a7" />
+
+<img width="1171" height="562" alt="image" src="https://github.com/user-attachments/assets/2101fa0c-7c8e-49e4-983d-463dfd2bf65c" />
+
+
+
+
+
 
 
