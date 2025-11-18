@@ -44,14 +44,6 @@ sudo systemctl start jenkins
 ````
 sudo systemctl status jenkins
 ````
-
-````
-sudo apt install docker.io -y
-````
-````
-sudo usermod -aG docker jenkins
-sudo systemctl restart jenkins
-````
 ````
 http://YOUR_SERVER_IP:8080
 ````
@@ -63,6 +55,56 @@ Install suggested plugins
 username-admin
 password-admin
 ````
+## Set up the Docker repository: 
+
+````
+ IMP : sudo apt install docker.io -y
+````
+Install packages to allow apt to use a repository over HTTPS:
+
+````
+sudo apt-get install ca-certificates curl gnupg
+````
+Add Docker's official GPG key.
+````
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+````
+
+Add the Docker repository to apt sources:
+````
+echo \
+"deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+"$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+````
+
+Update the apt package index again.
+
+````
+apt-get update
+````
+
+Install Docker Engine, containerd, and Docker Compose:
+````
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+````
+Create the docker group (if it doesn't already exist):
+````
+sudo groupadd docker
+````
+Add your user to the docker group:
+````
+sudo usermod -aG docker $USER
+````
+
+
+# Install suggested plugins 
+````
+username-admin
+password-admin
+````
 — Install Required Plugins
 
 Go to:
@@ -70,7 +112,7 @@ Go to:
 Manage Jenkins → Plugins → Available Plugins
 
 Add Credenatial:
-* instll plugins - docker plugins , docker pipeline plugins , git , pipeline , pipeline stageview, 
+* install plugins - docker plugins , docker pipeline plugins , git , pipeline , pipeline stageview, 
 * integrate tools - git add credencial if repo is private , docker , node js .
 
 ```
