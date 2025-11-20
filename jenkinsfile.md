@@ -159,6 +159,87 @@ docker logs backend-container
 <img width="1171" height="562" alt="image" src="https://github.com/user-attachments/assets/2101fa0c-7c8e-49e4-983d-463dfd2bf65c" />
 
 
+# Now i will push my docker image to the dockerhub 
+
+## For that you have to create a account for docker hub 
+
+login to the docker hub --
+
+username - kirand18
+
+password - docker-token
+
+create token from -->account setting--> personal access token -->token will genrate --> copy that token and save .
+
+Go to the jenkins --> credential --> add credentai--> in secret paste the doker-token .
+
+<img width="1076" height="777" alt="image" src="https://github.com/user-attachments/assets/4215f4ae-81f7-4f9f-87ca-4e43b3ff04fc" />
+
+After that go the job --> pipeline --> pipeline syntax  --> follow this steps 
+
+<img width="1802" height="896" alt="image" src="https://github.com/user-attachments/assets/ec72e3f8-db34-4f36-b58a-b82738a375d4" />
+
+Write the stages for the -->create the image -->  Login to dockerhub  --> push image to dockerhub ---> pull image to conatiner --> and host the application
+
+jenkins file for this stages :
+
+````
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = "myimage"
+        CONTAINER_NAME = "backend-container"
+    }
+
+    stages {
+        stage('pull'){
+            steps {
+                git branch: 'main', credentialsId: 'git-C', url: 'https://github.com/kirandhurve18/backend-hrms.git'
+            }
+        }
+    
+        stage('Build Docker Image') {
+            steps {
+                script {
+                   docker.build(IMAGE_NAME)
+                }
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                 withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKERHUB_TOKEN')]) {
+                 sh '''
+                echo "$DOCKERHUB_TOKEN" | docker login -u "kirand18" --password-stdin
+               '''
+            }
+        }
+} 
+
+        stage('Push to DockerHub') {
+            steps {
+             sh '''
+             docker tag myimage:latest kirand18/dockerrepo:latest
+             docker push kirand18/dockerrepo:latest
+             '''
+    }
+}
+        stage('deploy'){
+            steps{
+                sh """
+                    docker rm -f backend-container || true
+                    docker pull kirand18/dockerrepo:latest
+                    docker run -d --name backend-container -p 3005:3005 kirand18/dockerrepo:latest
+                """
+            }
+        }
+
+    
+    }
+}
+
+````
+
 
 
 
