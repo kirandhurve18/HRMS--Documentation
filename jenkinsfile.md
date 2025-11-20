@@ -245,12 +245,12 @@ pipeline {
 
 ## I am using the GCP kubernet engine for the deployment :
 
-Step 1 — Open Google Cloud Console
+### Step 1 — Open Google Cloud Console
 
 https://console.cloud.google.com/iam-admin/serviceaccounts
 Select your GCP Project (top dropdown).
 
-Step 2 — Create Service Account
+### Step 2 — Create Service Account
 
 Click:
 
@@ -273,7 +273,7 @@ Click CREATE AND CONTINUE.
 
 <img width="955" height="572" alt="image" src="https://github.com/user-attachments/assets/69b2d1ee-41d1-4133-bc70-c647b0309504" />
 
-Step 3 — Assign Required IAM Roles
+### Step 3 — Assign Required IAM Roles
 
 You must add three roles:
 
@@ -284,11 +284,11 @@ You must add three roles:
 <img width="1570" height="714" alt="image" src="https://github.com/user-attachments/assets/bcc85d97-0f3f-474d-b68c-ce57f62a283f" />
 
 
-Step 4 — Skip granting user access -->  Click DONE.
+### Step 4 — Skip granting user access -->  Click DONE.
 
 ## You now have a Service Account.
 
-Step 5 — Create JSON Key
+### Step 5 — Create JSON Key
 
 Open the Service Account you created:
 jenkins-gke-deploy@<project-id>.iam.gserviceaccount.com
@@ -305,7 +305,7 @@ Click CREATE.
 
 Your browser will download: --> jenkins-gke-deploy-xxxx.json --> This is the file Jenkins needs.
 
-Step 6 — Upload Key to Jenkins
+### Step 6 — Upload Key to Jenkins
 
 Go to:
 
