@@ -179,6 +179,7 @@ After that go the job --> pipeline --> pipeline syntax  --> follow this steps
 
 <img width="1802" height="896" alt="image" src="https://github.com/user-attachments/assets/ec72e3f8-db34-4f36-b58a-b82738a375d4" />
 
+
 Write the stages for the -->create the image -->  Login to dockerhub  --> push image to dockerhub ---> pull image to conatiner --> and host the application
 
 jenkins file for this stages :
