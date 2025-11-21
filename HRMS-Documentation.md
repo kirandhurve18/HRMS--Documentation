@@ -359,4 +359,10 @@ Check Version
 ````
 gcloud --version
 ````
+# Create  a Cluster 
 
+SELECT -> Standard mode 
+
+select -> zonal 
+
+node type -> e2 - medium  , No of nodes -> 2 --> create 
