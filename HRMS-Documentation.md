@@ -366,3 +366,39 @@ SELECT -> Standard mode
 select -> zonal 
 
 node type -> e2 - medium  , No of nodes -> 2 --> create 
+
+# Transfer the json.key to the server for that you need steps :
+
+craete the keys in the cmd (window)
+````
+ssh-keygen -t rsa -f C:\Users\Kiran\.ssh\mygcp -C kiran 
+````
+It will create the 
+mygcp --> private key , mygcp.pub --> public key 
+
+Copy the public key to VM : Compute Engine → VM instances → Click your VM → Edit → SSH Keys
+
+<img width="1292" height="398" alt="image" src="https://github.com/user-attachments/assets/446e2d31-38d4-4a99-b01e-eecb8a85122f" />
+
+Check this for the username that have to use in the scp command .
+
+servre will have the public-key and the local machine will have the private-key 
+
+connect with local to remote 
+
+TO TEST THE CONNECTION :
+````
+ssh -i "C:\Users\Kiran\.ssh\mygcp" kiran@34.66.206.108
+````
+
+## use command scp in the cmd 
+
+````
+scp -i "C:\Users\Kiran\.ssh\mygcp" sonorous-guide-471513-h8-a1f2e0fcedb5.json kiran@34.66.206.108:/home/ubuntu/gcp
+````
+
+local path = C:\Users\Kiran\.ssh\mygcp , key-name = sonorous-guide-471513-h8-a1f2e0fcedb5.json , username@<server-ip>=kiran@34.66.206.108 , remotepath=/home/ubuntu/gcp
+
+
+
+
