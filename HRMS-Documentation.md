@@ -325,7 +325,7 @@ Click Save.
 
 <img width="1586" height="857" alt="image" src="https://github.com/user-attachments/assets/e8ec0c6e-7851-42f8-a12d-53e3980d87d1" />
 
-## Install kubectl directly from Kubernetes
+# Install kubectl directly from Kubernetes
 
 ### Download latest kubectl
 
@@ -349,5 +349,14 @@ sudo mv kubectl /usr/local/bin/
 ````
 ````
 kubectl version --client
+````
+## Install Google cloud CLI 
+
+````
+apt-get install -y google-cloud-cli
+````
+Check Version 
+````
+gcloud --version
 ````
 
