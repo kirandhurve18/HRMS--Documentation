@@ -400,5 +400,36 @@ scp -i "C:\Users\Kiran\.ssh\mygcp" sonorous-guide-471513-h8-a1f2e0fcedb5.json ki
 local path = C:\Users\Kiran\.ssh\mygcp , key-name = sonorous-guide-471513-h8-a1f2e0fcedb5.json , username@<server-ip>=kiran@34.66.206.108 , remotepath=/home/ubuntu/gcp
 
 
+## Add Google Cloud APT Repository
+
+````
+sudo apt-get install -y apt-transport-https ca-certificates gnupg
+````
+## Add Google Cloud public key:
+
+````
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+````
+## Add the repository:
+````
+echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | \
+  sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+````
+## Update and Install Plugin
+````
+sudo apt-get update
+sudo apt-get install -y google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
+````
+## Test plugin:
+````
+gke-gcloud-auth-plugin --version
+````
+## Test GKE Authentication
+````
+kubectl get nodes
+````
+
+
+
 
 
