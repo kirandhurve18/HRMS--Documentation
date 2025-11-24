@@ -433,6 +433,9 @@ TO check the gclohd auth , which service account is configured .
 ````
 gcloud auth list
 ````
+After this you have to  login into the cluster ..
+
+go to the cluster and click the connenct button . after copy the url and paste on the server .
 
 
 
