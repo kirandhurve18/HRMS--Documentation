@@ -428,8 +428,11 @@ gke-gcloud-auth-plugin --version
 ````
 kubectl get nodes
 ````
+TO check the gclohd auth , which service account is configured .
 
-
+````
+gcloud auth list
+````
 
 
 
