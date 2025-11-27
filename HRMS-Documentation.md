@@ -459,5 +459,6 @@ echo "YOUR_PUBLIC_SSH_KEY_HERE" >> /home/ubuntu/.ssh/authorized_keys
 chmod 600 /home/ubuntu/.ssh/authorized_keys
 chown -R ubuntu:ubuntu /home/ubuntu/.ssh
 ````
+Script come before the 
 
 save it and then start the VirtualMachine 
