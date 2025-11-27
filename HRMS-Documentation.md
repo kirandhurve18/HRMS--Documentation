@@ -437,5 +437,27 @@ After this you have to  login into the cluster ..
 
 go to the cluster and click the connenct button . after copy the url and paste on the server .
 
+============================================================================================
 
+## issue related the UFW .....dont do it again 
+--
+STOP the VirtualMachine ---
+Select VM -- EDIT -- Automation -- write script over there 
 
+ ````
+#!/bin/bash
+# Disable firewall (UFW)
+ufw disable || true
+
+# Re-enable SSH in case it's disabled
+systemctl enable ssh || true
+systemctl start ssh || true
+
+# Add your SSH public key manually
+mkdir -p /home/ubuntu/.ssh
+echo "YOUR_PUBLIC_SSH_KEY_HERE" >> /home/ubuntu/.ssh/authorized_keys
+chmod 600 /home/ubuntu/.ssh/authorized_keys
+chown -R ubuntu:ubuntu /home/ubuntu/.ssh
+````
+
+save it and then start the VirtualMachine 
