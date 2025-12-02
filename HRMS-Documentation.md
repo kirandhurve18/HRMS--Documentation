@@ -462,3 +462,7 @@ chown -R ubuntu:ubuntu /home/ubuntu/.ssh
 Script come before the 
 
 save it and then start the VirtualMachine 
+
+# WEBHOOK TRIGGERE :
+
+Go to the pipeline select configure -->  go to tiggers --> Poll SCM --> schedule a crontab job ---> then save 
