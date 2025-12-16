@@ -402,28 +402,45 @@ local path = C:\Users\Kiran\.ssh\mygcp , key-name = sonorous-guide-471513-h8-a1f
 
 ## Add Google Cloud APT Repository
 
-````
-sudo apt-get install -y apt-transport-https ca-certificates gnupg
-````
-## Add Google Cloud public key:
+Step 1: Install prerequisites
 
 ````
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo apt update
+sudo apt install -y apt-transport-https ca-certificates gnupg curl
+
 ````
-## Add the repository:
+Step 2: Add Google Cloud GPG key
+
 ````
-echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | \
-  sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+| sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
 ````
-## Update and Install Plugin
+Step 3: Add Google Cloud APT repository
 ````
-sudo apt-get update
-sudo apt-get install -y google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] \
+https://packages.cloud.google.com/apt cloud-sdk main" \
+| sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
 ````
-## Test plugin:
+Step 4: Update package list
+````
+sudo apt update
+````
+Step 5: Install Google Cloud SDK
+````
+sudo apt install -y google-cloud-sdk
+````
+Step 6: Install GKE auth plugin (VERY IMPORTANT)
+````
+sudo apt install -y google-cloud-sdk-gke-gcloud-auth-plugin
+````
+✅ Verify Installation
+````
+gcloud version
+````
 ````
 gke-gcloud-auth-plugin --version
 ````
+
 ## Test GKE Authentication
 ````
 kubectl get nodes
