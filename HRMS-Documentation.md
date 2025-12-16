@@ -450,6 +450,27 @@ TO check the gclohd auth , which service account is configured .
 ````
 gcloud auth list
 ````
+
+##  configure this to connect to cluster 
+
+Step 1: Activate service account using key
+````
+gcloud auth activate-service-account \
+  jenkins-gke-deploy@sigma-icon-480904-m9.iam.gserviceaccount.com \
+  --key-file=/path/to/jenkins-key.json
+````
+Step 2: Disable Compute Engine default auth
+
+````
+gcloud config set account jenkins-gke-deploy@sigma-icon-480904-m9.iam.gserviceaccount.com
+````
+🔹 Step 3: Run again
+````
+gcloud container clusters get-credentials CLUSTER_NAME \
+  --zone us-central1-a \
+  --project sigma-icon-480904-m9
+````
+
 ## For creating the instance for the master kubernet select the service account is compulsary. ## 
 
 After this you have to  login into the cluster ..
