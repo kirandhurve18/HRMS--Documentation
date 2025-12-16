@@ -433,6 +433,8 @@ TO check the gclohd auth , which service account is configured .
 ````
 gcloud auth list
 ````
+## For creating the instance for the master kubernet select the service account is compulsary. ## 
+
 After this you have to  login into the cluster ..
 
 go to the cluster and click the connenct button . after copy the url and paste on the server .
