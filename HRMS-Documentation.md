@@ -463,6 +463,9 @@ gcloud auth activate-service-account \
   jenkins-gke-deploy@sigma-icon-480904-m9.iam.gserviceaccount.com \
   --key-file=/path/to/jenkins-key.json
 ````
+
+--key-file=/home/ubuntu/gcp/sigma-icon-480904-m9.iam.gserviceaccount.com
+
 Step 2: Disable Compute Engine default auth
 
 ````
