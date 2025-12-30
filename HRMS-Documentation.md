@@ -393,6 +393,8 @@ ssh -i "C:\Users\Kiran\.ssh\mygcp" kiran@34.66.206.108
 
 ## use command scp in the cmd 
 
+### create the directory in the server and give the permission to this directory. only then sile from local to remote will transfer.
+
 ````
 scp -i "C:\Users\Kiran\.ssh\mygcp" sonorous-guide-471513-h8-a1f2e0fcedb5.json kiran@34.66.206.108:/home/ubuntu/gcp
 ````
