@@ -471,12 +471,16 @@ Step 2: Disable Compute Engine default auth
 ````
 gcloud config set account jenkins-gke-deploy@sigma-icon-480904-m9.iam.gserviceaccount.com
 ````
+### COPY THE COMMAND FROM THE CLUSTER TO CONNECT THE CLUSTER TO THE INSTANCE :
+
 🔹 Step 3: Run again
 ````
 gcloud container clusters get-credentials CLUSTER_NAME \
   --zone us-central1-a \
   --project sigma-icon-480904-m9
 ````
+
+
 
 ## For creating the instance for the master kubernet select the service account is compulsary. ## 
 
