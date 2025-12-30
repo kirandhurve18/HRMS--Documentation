@@ -455,6 +455,8 @@ gcloud auth list
 
 ##  configure this to connect to cluster 
 
+### SET the service account for the jenkins for the key-file deployment 
+
 Step 1: Activate service account using key
 ````
 gcloud auth activate-service-account \
