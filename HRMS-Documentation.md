@@ -163,6 +163,8 @@ docker logs backend-container
 
 ## For that you have to create a account for docker hub 
 
+## while creating a dockerhub-token give full permission of read-write-delete.
+
 login to the docker hub --
 
 username - kirand18
