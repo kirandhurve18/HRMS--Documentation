@@ -524,6 +524,12 @@ Go to the pipeline select configure -->  go to tiggers --> Poll SCM --> schedule
 
 ------------------------------------------------------------------------------------------------------------------------
 
+#  article for creating the private cluster
+
+https://medium.com/@hero710690/deploy-your-application-to-gke-private-cluster-with-nginx-ingress-controller-smoothly-and-elegantly-f782b1d32acd
+
+---------------------------------------------------------------------------------------------------------------------------
+
 # INGRESS CONTROLLER Installationn 
 
 install the ingress in the kubernet master. 
