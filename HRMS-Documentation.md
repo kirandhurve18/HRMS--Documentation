@@ -519,3 +519,27 @@ save it and then start the VirtualMachine
 # WEBHOOK TRIGGERE :
 
 Go to the pipeline select configure -->  go to tiggers --> Poll SCM --> schedule a crontab job ---> then save 
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+# INGRESS CONTROLLER Installationn 
+
+install the ingress in the kubernet master. 
+
+Where Ingress actually lives
+Component	Where it runs
+Jenkins	CI/CD server -- (builds image, runs kubectl)
+Kubernetes master	-- Control plane (API, scheduler)
+Worker nodes	-- Where your app pods run
+Ingress Controller	-- Runs as pods inside Kubernetes cluster
+
+Ingress Controller is deployed to Kubernetes like any other app.
+
+### You install it using:
+
+````
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.0/deploy/static/provider/cloud/deploy.yaml
+````
+
