@@ -548,4 +548,8 @@ Ingress Controller is deployed to Kubernetes like any other app.
 ````
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.0/deploy/static/provider/cloud/deploy.yaml
 ````
-
+------------------------------------------------------
+env:
+        - name: MONGO_URI
+          value: "mongodb+srv://kirand1895_db_user:kiran1234@self-cluster-project.wum02zd.mongodb.net/hrms-database?retryWrites=true&w=majority"
+------------------------------------------------------------
